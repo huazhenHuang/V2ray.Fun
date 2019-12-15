@@ -65,8 +65,9 @@ curl -L -s https://install.direct/go.sh | bash
 
 #Install certbot
 sudo service apache2 stop 
-cd /usr/local/
-git clone https://github.com/certbot/certbot
+cd /etc/
+git clone https://github.com/certbot/certbot.git --depth=1
+chmod a+x /etc/certbot/certbot-auto
 
 #Install V2ray.Fun
 cd /usr/local/

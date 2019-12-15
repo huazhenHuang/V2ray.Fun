@@ -242,7 +242,7 @@ def gen_ssl():
 
     stop_service()
 
-    cmd = "bash /usr/local/certbot/certbot-auto certonly --agree-tos -t  --issue -d {0} --standalone".format(domain)
+    cmd = "bash /etc/certbot/certbot-auto certonly --agree-tos -t  --issue -d {0} --standalone".format(domain)
     check_acme = """ps -ef | grep "certbot" | grep -v grep | awk '{print $2}'"""
     commands.getoutput(cmd)
     acme_status = commands.getoutput(check_acme)
