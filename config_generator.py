@@ -192,11 +192,11 @@ def gen_server():
     if data['tls'] == "on":
         server['inbound']['streamSettings']['security'] = "tls"
         server_tls['certificates'][0][
-            'certificateFile'] = "/root/.acme.sh/{0}/fullchain.cer".format(
+            'certificateFile'] = "/etc/letsencrypt/live/{0}/fullchain.pem".format(
                 data['domain'])
         server_tls['certificates'][0][
-            'keyFile'] = "/root/.acme.sh/{0}/{0}.key".format(
-                data['domain'], data['domain'])
+            'keyFile'] = "/etc/letsencrypt/live/{0}/privkey.pem".format(
+                data['domain'])
         server['inbound']['streamSettings']['tlsSettings'] = server_tls
 
     with open("/etc/v2ray/config.json", "w") as f:

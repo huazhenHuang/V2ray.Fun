@@ -241,15 +241,15 @@ def gen_ssl():
     domain = str(items['domain'])
 
     stop_service()
-    cmd = "bash /root/.acme.sh/acme.sh  --issue -d {0} --standalone".format(
-        domain)
-    check_acme = """ps -ef | grep "acme.sh" | grep -v grep | awk '{print $2}'"""
+
+    cmd = "bash /usr/local/certbot/certbot-auto certonly --agree-tos -t  --issue -d {0} --standalone".format(domain)
+    check_acme = """ps -ef | grep "certbot" | grep -v grep | awk '{print $2}'"""
     commands.getoutput(cmd)
     acme_status = commands.getoutput(check_acme)
     while acme_status != "":
         acme_status = commands.getoutput(check_acme)
 
-    result = os.path.exists("/root/.acme.sh/{0}/fullchain.cer".format(domain))
+    result = os.path.exists("/etc/letsencrypt/live/{0}/fullchain.pem".format(domain))
     start_service()
     if result is True:
         return "True"
@@ -261,9 +261,8 @@ with open("v2ray.config") as f:
     data = json.load(f)
 
 if data['tls'] == "on" and panel_config['use_ssl'] == "on":
-    key_file = "/root/.acme.sh/{0}/{0}.key".format(data['domain'],
-                                                   data['domain'])
-    crt_file = "/root/.acme.sh/{0}/fullchain.cer".format(data['domain'])
+    key_file = "/etc/letsencrypt/live/{0}/privkey.pem".format(data['domain'])
+    crt_file = "/etc/letsencrypt/live/{0}/fullchain.pem".format(data['domain'])
     app.run(host='0.0.0.0',
             port=panel_config['port'],
             ssl_context=(crt_file, key_file))

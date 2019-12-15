@@ -58,10 +58,15 @@ if [ ${Debian_version} == 9 ];then
 fi
 
 #Install acme.sh
-curl https://get.acme.sh | sh
+#curl https://get.acme.sh | sh
 
 #Install V2ray
 curl -L -s https://install.direct/go.sh | bash
+
+#Install certbot
+sudo service apache2 stop 
+cd /usr/local/
+git clone https://github.com/certbot/certbot
 
 #Install V2ray.Fun
 cd /usr/local/
